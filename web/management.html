@@ -8,20 +8,67 @@
 	<div id="app">
 		<h1>Anti Drug-Dealers</h1>
 		<p>Just click and spam bam back</p>
-		<h3>Enter number:</h3>
+		<h3>Enter number (e.g. 972547774585):</h3>
 	</div>
 
 
 
     <form action="http://localhost:8000/zayan" method="POST">
+
         <textarea id="number" class="number-area" name="numberid"></textarea><br>
+		<input type="checkbox" id="ShowOnMeCheck" onclick="ShowOnMe()">
+		<label for="checkbox">תדגים גם עלי על הדרך</label>
+
+		<p id="ShowOnMe" style="display:none">Put your phone number below (e.g. 972547774585):</p>
+		<textarea id="ShowOnMeTB" class="number-area" name="messageidonme" style="display:none"></textarea><br><br>
+
         <h3>Enter message</h3>
-        <textarea id="message" class="number-area" name="messageid"></textarea>
-        <button type="submit">Submit</button>
+        <textarea id="message" class="number-area" name="messageid"></textarea><br><br>
+		<label for="nodercb">אני נודר נדר להספים רק סוחרי סמים באמצעות הכלי</label>
+		<input type="checkbox" id="nodercb" onclick="Noder()">
+		<br><br>
+        <button id="nodersubmit" type="submit" disabled=true>Submit</button>
       </form>
 </center>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js" crossorigin="anonymous"></script>
+	<script>
+	function ShowOnMe() {
+	// Get the checkbox
+	var checkBoxonme = document.getElementById("ShowOnMeCheck");
+	// Get the output texts
+	var text = document.getElementById("ShowOnMe");
+	var textbox = document.getElementById("ShowOnMeTB");
+
+	// If the checkbox is checked, display the output text
+	if (checkBoxonme.checked == true){
+		text.style.display = "block";
+		textbox.style.display = "block";
+	} else {
+		text.style.display = "none";
+		textbox.style.display = "none";
+
+	}
+	}
+
+	function Noder() {
+	// Get the checkbox
+	var nodercb = document.getElementById("nodercb");
+	// Get the output texts
+	var noderbutton = document.getElementById("nodersubmit");
+
+	// If the checkbox is checked, display the output text
+	if (nodercb.checked == true){
+
+		noderbutton.disabled = false;
+	} else {
+
+		noderbutton.disabled = true;
+
+	}
+	}
+
+	</script>
 </body>
 </html>
 
