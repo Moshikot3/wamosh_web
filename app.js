@@ -26,7 +26,7 @@ const server = http.createServer(app);
 const io = socketIO(server);
 const limiter = rateLimit({
 	windowMs: 15 * 60 * 1000, // 15 minutes
-	max: 10, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
+	max: 3, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
   message:
 		'סבתא שך מתה תמות אמן',
 	standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
