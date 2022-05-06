@@ -1,6 +1,7 @@
 #whatsapp_session
 auth/
 .wwebjs_auth/
+whatsapp_sessions.json
 
 # Logs
 logs
