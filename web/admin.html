@@ -5,11 +5,11 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" crossorigin="anonymous"></script>
 	<script type="text/javascript">
 		$(document).ready(function() {
-			var url = 'http://localhost:8000/user';
+			var url = '/user';
 			fetch(url).then(response=>response.text())
 			.then(data=>{ $('#user').html('Welcome ' + data) })
 
-			var url = 'http://localhost:8000/logs';
+			var url = '/logs';
 			fetch(url).then(response=>response.text())
 			.then(data=>{ $('#logs').html(data) })
 		});
