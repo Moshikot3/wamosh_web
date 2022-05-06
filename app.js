@@ -151,12 +151,7 @@ const createSession = function(id, description) {
   const client = new Client({
     authStrategy: new LocalAuth({
         clientId: id
-    }),
-    puppeteer: {
-        headless: false,
-        executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe',
-        args: ['--no-sandbox']
-    }
+    })
   });
   
 
@@ -172,6 +167,7 @@ const createSession = function(id, description) {
   });
 
   client.on('ready', () => {
+    console.log('ready '+id);  
     io.emit('ready', { id: id });
     io.emit('message', { id: id, text: 'Whatsapp is ready!' });
 
