@@ -199,12 +199,7 @@ const createSession = function(id, description) {
   const client = new Client({
     authStrategy: new LocalAuth({
         clientId: id
-    }),
-    puppeteer: {
-        headless: false,
-        executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe',
-        args: ['--no-sandbox']
-    }
+    })
   });
   
 
