@@ -16,12 +16,15 @@ const md5 = require("apache-md5");
 const app = express();
 
 
-
-const basic = auth.basic({
-	realm: 'Login',
-	file: __dirname + '/htpasswd'
+let basic = auth.basic({
+  realm: 'Login'
 });
-
+if (fs.existsSync(__dirname + '/htpasswd')) {
+  basic = auth.basic({
+    realm: 'Login',
+    file: __dirname + '/htpasswd'
+  });
+}
 
 const server = http.createServer(app);
 const io = socketIO(server);
@@ -196,7 +199,12 @@ const createSession = function(id, description) {
   const client = new Client({
     authStrategy: new LocalAuth({
         clientId: id
-    })
+    }),
+    puppeteer: {
+        headless: false,
+        executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe',
+        args: ['--no-sandbox']
+    }
   });
   
 
@@ -266,7 +274,12 @@ const createSession = function(id, description) {
   }
 }
 
-const init = function(socket) {
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+
+const init = async function(socket) {
   const savedSessions = getSessionsFile();
 
   if (savedSessions.length > 0) {
@@ -284,9 +297,15 @@ const init = function(socket) {
 
       socket.emit('init', savedSessions);
     } else {
-      savedSessions.forEach(sess => {
+      for(const sess of savedSessions) {
+        console.log(sess.id)
         createSession(sess.id, sess.description);
-      });
+        await sleep(10000);
+      }
+      // savedSessions.forEach(async sess => {
+      //   await sleep(10000)
+        
+      // });
     }
   }
 }
