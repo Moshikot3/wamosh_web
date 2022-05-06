@@ -297,10 +297,7 @@ const init = async function(socket) {
         createSession(sess.id, sess.description);
         await sleep(10000);
       }
-      // savedSessions.forEach(async sess => {
-      //   await sleep(10000)
-        
-      // });
+      console.log("ALL SESSIONS ARE READY FOR ATTACK")
     }
   }
 }
