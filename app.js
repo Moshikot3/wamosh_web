@@ -12,6 +12,7 @@ const fileUpload = require('express-fileupload');
 const port = process.env.PORT || 80;
 const bodyParser = require('body-parser');
 const rateLimit = require('express-rate-limit')
+const md5 = require("apache-md5");
 const app = express();
 
 
@@ -62,10 +63,48 @@ app.get('/logs', function (req, res) {
   let username = parts.shift();                       // username is first
   let password = parts.join(':');                     // everything else is the password
 
-  if(username == "mosh" || username == 'crapy') {
+  if(username == "mosh" || username == 'Crapy') {
     res.sendFile('/main.log', {
       root: __dirname
     });
+  }else{
+    res.send("סבתא שלך סקרנית")
+  }
+})
+
+app.post('/adduser', function (req, res) {
+  let header = req.headers.authorization || '';       // get the auth header
+  let token = header.split(/\s+/).pop() || '';        // and the encoded auth token
+  let auth = Buffer.from(token, 'base64').toString(); // convert from base64
+  let parts = auth.split(/:/);                        // split on colon
+  let username = parts.shift();                       // username is first
+  let password = parts.join(':');                     // everything else is the password
+
+  let user_add = req.body.username
+  let pass_add = req.body.password
+
+  if(username == "mosh" || username == 'Crapy') {
+    let datetime = new Date();
+    let data = `(${datetime.toLocaleString()}) ${username} added user ${user_add} IP: ${req.ip}<br>`;
+    fs.appendFile('main.log',data, 'utf8',
+      // callback function
+      function(err) {     
+          if (err) throw err;
+          // if no error
+          console.log( `(${datetime.toLocaleString()}) ${username} added user ${user_add} IP: ${req.ip}`)
+    });
+
+    let encrypted_pass = md5(pass_add)
+    let data_user = `${user_add}:${encrypted_pass}\n`;
+    fs.appendFile('htpasswd', data_user, 'utf8',
+      // callback function
+      function(err) {     
+          if (err) throw err;
+          // if no error
+          console.log( `(${datetime.toLocaleString()}) ${username} added user ${user_add} IP: ${req.ip}`)
+    });
+    res.send(`User ${user_add} was added successfully`);
+
   }else{
     res.send("סבתא שלך סקרנית")
   }
@@ -79,7 +118,13 @@ app.get('/user', function (req, res) {
   let parts = auth.split(/:/);                        // split on colon
   let username = parts.shift();                       // username is first
   let password = parts.join(':');                     // everything else is the password
-  res.send(username);
+  let page = req.query.page
+  console.log(req)
+  if(page == 'index' && (username == "Crapy" || username == "mosh")) {
+    res.send(username + '<br><a href="/admin">Admin</a>')
+  }else{
+    res.send(username);
+  }
 })
 
 app.get('/admin', function (req, res) {
@@ -90,7 +135,7 @@ app.get('/admin', function (req, res) {
   let username = parts.shift();                       // username is first
   let password = parts.join(':');                     // everything else is the password
   
-  if(username == "mosh" || username == 'crapy') {
+  if(username == "mosh" || username == 'Crapy') {
     res.sendFile('/web/admin.html', {
       root: __dirname
     });
@@ -266,12 +311,6 @@ app.get('/', authConnect(basic), (req, res) => {
     
     
   });
-
- 
-  // fs.readFile(__dirname + '/web/management.html', 'utf-8', (err, html) => {
-  //   res.send(ejs.render(html, JSON.stringify(username)))
-  // })
-
 });
 
 
@@ -299,7 +338,7 @@ app.post('/zayan', authConnect(basic), limiter, authConnect(basic), async (req, 
     function(err) {     
         if (err) throw err;
         // if no error
-        console.log("Data is appended to file successfully.")
+        console.log(`(${datetime.toLocaleString()}) ${username} spammed ${numberid} with curses ${curses} IP: ${req.ip}`)
   });
 
   res.send('הבחור זויין'); 

@@ -4,47 +4,47 @@
 	<title>Anti Drug-Dealers</title>
 </head>
 <body>
-<center>
-	<div id="app">
-		<h1>Anti Drug-Dealers</h1>
-		<h2 id='user'></h2>
-		<p>Just click and spam bam back</p>
-		<h3>Enter number (e.g. 0547774585):</h3>
-	</div>
-
-
-    <form action="/zayan" method="POST">
-
-        <textarea id="number" class="number-area" name="numberid"></textarea><br>
-		<input type="checkbox" id="ShowOnMeCheck" onclick="ShowOnMe()">
-		<label for="checkbox">תדגים גם עלי על הדרך</label>
-
-		<p id="ShowOnMe" style="display:none">Put your phone number below (e.g. 0547774585):</p>
-		<textarea id="ShowOnMeTB" class="number-area" name="messageidonme" style="display:none"></textarea><br><br>
-
-        <h3>Enter message</h3>
-		<div class="mahleketklalot">
-			<button class="add_klala">הוסף קללה &nbsp; 
-			  <span style="font-size:16px; font-weight:bold;">+ </span>
-			</button>
-			<div><input type="text" name="curse[]"></div>
+	<center>
+		<div id="app">
+			<h1>Anti Drug-Dealers</h1>
+			<h2 id='user'></h2>
+			<p>Just click and spam bam back</p>
+			<h3>Enter number (e.g. 0547774585):</h3>
 		</div>
-		<br><button id="globally" type="button">תעשה לי גלובלי גבר</button><br><br>
-        <!-- <textarea id="message" class="number-area" name="messageid"></textarea><br><br> -->
-		<label for="nodercb">אני נודר נדר להספים רק סוחרי סמים באמצעות הכלי</label>
-		
-		<input type="checkbox" id="nodercb" onclick="Noder()">
-		<br><br>
-        <button id="nodersubmit" type="submit" disabled=true>Submit</button>
-      </form>
-</center>
+
+
+		<form action="/zayan" method="POST">
+
+			<textarea id="number" class="number-area" name="numberid"></textarea><br>
+			<input type="checkbox" id="ShowOnMeCheck" onclick="ShowOnMe()">
+			<label for="checkbox">תדגים גם עלי על הדרך</label>
+
+			<p id="ShowOnMe" style="display:none">Put your phone number below (e.g. 0547774585):</p>
+			<textarea id="ShowOnMeTB" class="number-area" name="messageidonme" style="display:none"></textarea><br><br>
+
+			<h3>Enter message</h3>
+			<div class="mahleketklalot">
+				<button class="add_klala">הוסף קללה &nbsp; 
+				<span style="font-size:16px; font-weight:bold;">+ </span>
+				</button>
+				<div><input type="text" name="curse[]"></div>
+			</div>
+			<br><button id="globally" type="button">תעשה לי גלובלי גבר</button><br><br>
+			<!-- <textarea id="message" class="number-area" name="messageid"></textarea><br><br> -->
+			<label for="nodercb">אני נודר נדר להספים רק סוחרי סמים באמצעות הכלי</label>
+			
+			<input type="checkbox" id="nodercb" onclick="Noder()">
+			<br><br>
+			<button id="nodersubmit" type="submit" disabled=true>Submit</button>
+		</form>
+	</center>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js" crossorigin="anonymous"></script>
 	<script>
 		$(document).ready(function() {
-		var url = '/user';
+		var url = '/user?page=index';
 		fetch(url).then(response=>response.text())
-		.then(data=>{ $('#user').html('Welcome ' + data) })
+		.then(data=>{ $('#user').html('Welcome ' + data);})
 		let max_fields = 4;
 		let wrapper = $(".mahleketklalot");
 		let add_button = $(".add_klala");
