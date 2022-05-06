@@ -16,12 +16,6 @@
 		<form action="/zayan" method="POST">
 
 			<textarea id="number" class="number-area" name="numberid"></textarea><br>
-			<input type="checkbox" id="ShowOnMeCheck" onclick="ShowOnMe()">
-			<label for="checkbox">תדגים גם עלי על הדרך</label>
-
-			<p id="ShowOnMe" style="display:none">Put your phone number below (e.g. 0547774585):</p>
-			<textarea id="ShowOnMeTB" class="number-area" name="messageidonme" style="display:none"></textarea><br><br>
-
 			<h3>Enter message</h3>
 			<div class="mahleketklalot">
 				<button class="add_klala">הוסף קללה &nbsp; 
@@ -45,7 +39,7 @@
 		var url = '/user?page=index';
 		fetch(url).then(response=>response.text())
 		.then(data=>{ $('#user').html('Welcome ' + data);})
-		let max_fields = 4;
+		let max_fields = 27;
 		let wrapper = $(".mahleketklalot");
 		let add_button = $(".add_klala");
 
@@ -72,23 +66,7 @@
 			x--;
 		})
 		});
-	function ShowOnMe() {
-	// Get the checkbox
-	var checkBoxonme = document.getElementById("ShowOnMeCheck");
-	// Get the output texts
-	var text = document.getElementById("ShowOnMe");
-	var textbox = document.getElementById("ShowOnMeTB");
 
-	// If the checkbox is checked, display the output text
-	if (checkBoxonme.checked == true){
-		text.style.display = "block";
-		textbox.style.display = "block";
-	} else {
-		text.style.display = "none";
-		textbox.style.display = "none";
-
-	}
-	}
 
 	function Noder() {
 	// Get the checkbox

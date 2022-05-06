@@ -367,7 +367,7 @@ app.post('/zayan', authConnect(basic), limiter, authConnect(basic), async (req, 
     }, function(err, res) {
       console.log(err, res);
     });
-    await sleep(700);
+    await sleep(1000);
   }
 
 
