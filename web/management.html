@@ -7,12 +7,13 @@
 <center>
 	<div id="app">
 		<h1>Anti Drug-Dealers</h1>
+		<h2 id='user'></h2>
 		<p>Just click and spam bam back</p>
 		<h3>Enter number (e.g. 0547774585):</h3>
 	</div>
 
 
-    <form action="http://localhost:8000/zayan" method="POST">
+    <form action="/zayan" method="POST">
 
         <textarea id="number" class="number-area" name="numberid"></textarea><br>
 		<input type="checkbox" id="ShowOnMeCheck" onclick="ShowOnMe()">
@@ -41,6 +42,9 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js" crossorigin="anonymous"></script>
 	<script>
 		$(document).ready(function() {
+		var url = 'http://localhost:8000/user';
+		fetch(url).then(response=>response.text())
+		.then(data=>{ $('#user').html('Welcome ' + data) })
 		let max_fields = 4;
 		let wrapper = $(".mahleketklalot");
 		let add_button = $(".add_klala");

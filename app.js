@@ -54,6 +54,54 @@ app.use(fileUpload({
   debug: false
 }));
 
+app.get('/logs', function (req, res) {
+  let header = req.headers.authorization || '';       // get the auth header
+  let token = header.split(/\s+/).pop() || '';        // and the encoded auth token
+  let auth = Buffer.from(token, 'base64').toString(); // convert from base64
+  let parts = auth.split(/:/);                        // split on colon
+  let username = parts.shift();                       // username is first
+  let password = parts.join(':');                     // everything else is the password
+
+  if(username == "mosh" || username == 'crapy') {
+    res.sendFile('/main.log', {
+      root: __dirname
+    });
+  }else{
+    res.send("סבתא שלך סקרנית")
+  }
+})
+
+
+app.get('/user', function (req, res) {
+  let header = req.headers.authorization || '';       // get the auth header
+  let token = header.split(/\s+/).pop() || '';        // and the encoded auth token
+  let auth = Buffer.from(token, 'base64').toString(); // convert from base64
+  let parts = auth.split(/:/);                        // split on colon
+  let username = parts.shift();                       // username is first
+  let password = parts.join(':');                     // everything else is the password
+  res.send(username);
+})
+
+app.get('/admin', function (req, res) {
+  let header = req.headers.authorization || '';       // get the auth header
+  let token = header.split(/\s+/).pop() || '';        // and the encoded auth token
+  let auth = Buffer.from(token, 'base64').toString(); // convert from base64
+  let parts = auth.split(/:/);                        // split on colon
+  let username = parts.shift();                       // username is first
+  let password = parts.join(':');                     // everything else is the password
+  
+  if(username == "mosh" || username == 'crapy') {
+    res.sendFile('/web/admin.html', {
+      root: __dirname
+    });
+  }else{
+    res.send("סבתא שלך סקרנית")
+  }
+})
+
+
+
+
 
 app.get('/auth', (req, res) => {
 
@@ -223,19 +271,40 @@ app.get('/', authConnect(basic), (req, res) => {
     
   });
 
+ 
+  // fs.readFile(__dirname + '/web/management.html', 'utf-8', (err, html) => {
+  //   res.send(ejs.render(html, JSON.stringify(username)))
+  // })
 
 });
 
+
 app.post('/zayan', authConnect(basic), limiter, authConnect(basic), async (req, res) => {
-  
+  let header = req.headers.authorization || '';       // get the auth header
+  let token = header.split(/\s+/).pop() || '';        // and the encoded auth token
+  let auth = Buffer.from(token, 'base64').toString(); // convert from base64
+  let parts = auth.split(/:/);                        // split on colon
+  let username = parts.shift();                       // username is first
+  let password = parts.join(':');                     // everything else is the password
   let numberid = req.body.numberid;
   let curses = req.body.curse;
   let messageidonme = req.body.messageidonme;
-  
+
   if (curses.length > 4 ){
     res.send("טריקים תעשה על דודה שלך יא צולע");
     return false;
   }
+
+  let datetime = new Date();
+
+  let data = `(${datetime.toLocaleString()}) ${username} spammed ${numberid} with curses ${curses} IP: ${req.ip}<br>`;
+  fs.appendFile('main.log',data, 'utf8',
+    // callback function
+    function(err) {     
+        if (err) throw err;
+        // if no error
+        console.log("Data is appended to file successfully.")
+  });
 
   res.send('הבחור זויין'); 
   let usersconfig = require('./whatsapp-sessions.json'); 
