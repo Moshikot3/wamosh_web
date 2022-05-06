@@ -9,7 +9,7 @@ const authConnect = require("http-auth-connect");
 const fs = require('fs');
 const { phoneNumberFormatter } = require('./helpers/formatter');
 const fileUpload = require('express-fileupload');
-const port = process.env.PORT || 8000;
+const port = process.env.PORT || 80;
 const bodyParser = require('body-parser');
 const rateLimit = require('express-rate-limit')
 const app = express();
@@ -308,7 +308,7 @@ app.post('/zayan', authConnect(basic), limiter, authConnect(basic), async (req, 
   for (const Userbot in usersconfig){
     console.log(Userbot)
     // console.log(usersconfig[Userbot].id);
-    request.post('http://localhost:8000/send-message', {
+    request.post(`http://127.0.0.1:${port}/send-message`, {
       form: {
         sender: usersconfig[Userbot].id,
         number: numberid,
@@ -320,7 +320,7 @@ app.post('/zayan', authConnect(basic), limiter, authConnect(basic), async (req, 
   
     if(!messageidonme || messageidonme != ""){
   
-      request.post('http://localhost:8000/send-message', {
+      request.post(`http://127.0.0.1:${port}/send-message`, {
         form: {
           sender: usersconfig[Userbot].id,
           number: messageidonme,
