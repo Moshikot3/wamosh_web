@@ -5,7 +5,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" crossorigin="anonymous"></script>
 	<script type="text/javascript">
 		$(document).ready(function() {
-			var url = '/user';
+			var url = '/user?page=admin';
 			fetch(url).then(response=>response.text())
 			.then(data=>{ $('#user').html('Welcome ' + data) })
 
@@ -19,7 +19,14 @@
 	<center>
 		<h1>Admin Panel</h1>
 		<h2 id='user'></h2>
+		<form action="/adduser" method="POST">
+			<br>Add User<br>
+			Username <input name="username"/> Password <input name="password"/>
+			<button id="adduser" type="submit">Create</button>
+		</form>
+		<br><br>
 		<div id='logs'></div>
+
 	</center>
 </body>
 </html>

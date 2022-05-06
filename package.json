@@ -15,6 +15,7 @@
   "author": "Nur Muhammad",
   "license": "MIT",
   "dependencies": {
+    "apache-md5": "^1.1.7",
     "axios": "^0.20.0",
     "body-parser": "^1.20.0",
     "express": "^4.17.1",

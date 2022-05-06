@@ -2,6 +2,7 @@
 auth/
 .wwebjs_auth/
 whatsapp-sessions.json
+htpasswd
 
 # Logs
 logs
