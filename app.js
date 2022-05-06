@@ -228,19 +228,26 @@ app.get('/', authConnect(basic), (req, res) => {
 
 app.post('/zayan', authConnect(basic), limiter, authConnect(basic), async (req, res) => {
   
-  var numberid = req.body.numberid;
-  var messageid = req.body.messageid;
-  var messageidonme = req.body.messageidonme;
+  let numberid = req.body.numberid;
+  let curses = req.body.curse;
+  let messageidonme = req.body.messageidonme;
+  
+  if (curses.length > 4 ){
+    res.send("טריקים תעשה על דודה שלך יא צולע");
+    return false;
+  }
+
   res.send('הבחור זויין'); 
-  var usersconfig = require('./whatsapp-sessions.json'); 
-  console.log(usersconfig);
-  for (var Userbot in usersconfig){
-    console.log(usersconfig[Userbot].id);
+  let usersconfig = require('./whatsapp-sessions.json'); 
+  // console.log(usersconfig);
+  for (const Userbot in usersconfig){
+    console.log(Userbot)
+    // console.log(usersconfig[Userbot].id);
     request.post('http://localhost:8000/send-message', {
       form: {
         sender: usersconfig[Userbot].id,
         number: numberid,
-        message: messageid
+        message: (curses.length == 1 || Userbot > curses.length) ? curses[Math.floor(Math.random() * curses.length)] : curses[Userbot]
       }
     }, function(err, res) {
       console.log(err, res);
@@ -252,16 +259,12 @@ app.post('/zayan', authConnect(basic), limiter, authConnect(basic), async (req, 
         form: {
           sender: usersconfig[Userbot].id,
           number: messageidonme,
-          message: messageid
+          message: (curses.length == 1 || Userbot > curses.length) ? curses[Math.floor(Math.random() * curses.length)] : curses[Userbot]
         }
       }, function(err, res) {
         console.log(err, res);
       });
-  
-  
     }
-
-
   }
 
 
