@@ -1,3 +1,4 @@
 npm install -g htpasswd | password file
 
 htpasswd -bc htpasswd mosh sismashelmosh
+htpasswd -bc htpasswd Alon AlonXD123
