@@ -12,7 +12,6 @@
 	</div>
 
 
-
     <form action="http://localhost:8000/zayan" method="POST">
 
         <textarea id="number" class="number-area" name="numberid"></textarea><br>
@@ -23,8 +22,16 @@
 		<textarea id="ShowOnMeTB" class="number-area" name="messageidonme" style="display:none"></textarea><br><br>
 
         <h3>Enter message</h3>
-        <textarea id="message" class="number-area" name="messageid"></textarea><br><br>
+		<div class="mahleketklalot">
+			<button class="add_klala">הוסף קללה &nbsp; 
+			  <span style="font-size:16px; font-weight:bold;">+ </span>
+			</button>
+			<div><input type="text" name="curse[]"></div>
+		</div>
+		<br><button id="globally" type="button">תעשה לי גלובלי גבר</button><br><br>
+        <!-- <textarea id="message" class="number-area" name="messageid"></textarea><br><br> -->
 		<label for="nodercb">אני נודר נדר להספים רק סוחרי סמים באמצעות הכלי</label>
+		
 		<input type="checkbox" id="nodercb" onclick="Noder()">
 		<br><br>
         <button id="nodersubmit" type="submit" disabled=true>Submit</button>
@@ -33,6 +40,34 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js" crossorigin="anonymous"></script>
 	<script>
+		$(document).ready(function() {
+		let max_fields = 4;
+		let wrapper = $(".mahleketklalot");
+		let add_button = $(".add_klala");
+
+		let x = 1;
+		$(globally).click(function(e) {
+			$(wrapper).find('input, a').not(':first').each(function () {
+                        $(this).remove();
+						x = 1;
+                    });
+		})
+		$(add_button).click(function(e) {
+			e.preventDefault();
+			if (x < max_fields) {
+				x++;
+				$(wrapper).append('<div><input type="text" name="curse[]"><a href="#" class="delete">Delete</a></div>'); 
+			} else {
+				alert('הגעת למקסימום קללות')
+			}
+		});
+
+		$(wrapper).on("click", ".delete", function(e) {
+			e.preventDefault();
+			$(this).parent('div').remove();
+			x--;
+		})
+		});
 	function ShowOnMe() {
 	// Get the checkbox
 	var checkBoxonme = document.getElementById("ShowOnMeCheck");
