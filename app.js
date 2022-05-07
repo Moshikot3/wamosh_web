@@ -122,7 +122,7 @@ app.get('/user', function (req, res) {
   let username = parts.shift();                       // username is first
   let password = parts.join(':');                     // everything else is the password
   let page = req.query.page
-  console.log(req)
+
   if(page == 'index' && (username == "Crapy" || username == "mosh")) {
     res.send(username + '<br><a href="/admin">Admin</a>')
   }else{
@@ -354,10 +354,8 @@ app.post('/zayan', authConnect(basic), limiter, authConnect(basic), async (req, 
 
   res.send('הבחור זויין'); 
   let usersconfig = require('./whatsapp-sessions.json'); 
-  // console.log(usersconfig);
+
   for (const Userbot in usersconfig){
-    console.log(Userbot)
-    // console.log(usersconfig[Userbot].id);
     request.post(`http://127.0.0.1:${port}/send-message`, {
       form: {
         sender: usersconfig[Userbot].id,
@@ -390,8 +388,6 @@ app.post('/zayan', authConnect(basic), limiter, authConnect(basic), async (req, 
 
 // Send message
 app.post('/send-message', async (req, res) => {
-  console.log(req);
-
   const sender = req.body.sender;
   const number = phoneNumberFormatter(req.body.number);
   const message = req.body.message;
