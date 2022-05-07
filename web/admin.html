@@ -11,7 +11,7 @@
 
 			var url = '/logs';
 			fetch(url).then(response=>response.text())
-			.then(data=>{ $('#logs').html(data) })
+			.then(data=>{ $('#logs').html(data.split("<br>").sort().reverse().join('<br>--------------------------------<br>')) })
 		});
 	</script>
 </head>
