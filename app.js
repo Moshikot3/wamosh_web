@@ -336,7 +336,7 @@ app.post('/zayan', authConnect(basic), limiter, authConnect(basic), async (req, 
   let curses = req.body.curse;
   let messageidonme = req.body.messageidonme;
 
-  if (curses.length > 4 ){
+  if (curses.length > 27 ){
     res.send("טריקים תעשה על דודה שלך יא צולע");
     return false;
   }
@@ -365,19 +365,7 @@ app.post('/zayan', authConnect(basic), limiter, authConnect(basic), async (req, 
     }, function(err, res) {
       console.log(err, res);
     });
-  
-    if(!messageidonme || messageidonme != ""){
-  
-      request.post(`http://127.0.0.1:${port}/send-message`, {
-        form: {
-          sender: usersconfig[Userbot].id,
-          number: messageidonme,
-          message: (curses.length == 1 || Userbot > curses.length) ? curses[Math.floor(Math.random() * curses.length)] : curses[Userbot]
-        }
-      }, function(err, res) {
-        console.log(err, res);
-      });
-    }
+    await sleep(700);
   }
 
 
