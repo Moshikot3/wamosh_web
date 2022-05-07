@@ -87,15 +87,7 @@ app.post('/adduser', function (req, res) {
   let pass_add = req.body.password
 
   if(username == "mosh" || username == 'Crapy') {
-    let datetime = new Date();
-    let data = `(${datetime.toLocaleString()}) ${username} added user ${user_add} IP: ${req.ip}<br>`;
-    fs.appendFile('main.log',data, 'utf8',
-      // callback function
-      function(err) {     
-          if (err) throw err;
-          // if no error
-          console.log( `(${datetime.toLocaleString()}) ${username} added user ${user_add} IP: ${req.ip}`)
-    });
+    add_log(username, `added user ${user_add}`, req.ip)
 
     let encrypted_pass = md5(pass_add)
     let data_user = `${user_add}:${encrypted_pass}\n`;
@@ -185,6 +177,21 @@ const setSessionsFile = function(sessions) {
 
 const getSessionsFile = function() {
   return JSON.parse(fs.readFileSync(SESSIONS_FILE));
+}
+
+
+function add_log(username, text, ip) {
+  let datetime = new Date();
+  ip = ip.replace("::ffff:", "");
+  let data = `(${datetime.toLocaleString()}) ${username} ${text} IP: ${ip}<br>`;
+  fs.appendFile('main.log',data, 'utf8',
+    // callback function
+    function(err) {     
+        if (err) throw err;
+        // if no error
+        console.log( `(${datetime.toLocaleString()}) ${username} ${text} IP: ${ip}<br>`)
+  });
+
 }
 
 const createSession = function(id, description) {
@@ -341,16 +348,8 @@ app.post('/zayan', authConnect(basic), limiter, authConnect(basic), async (req, 
     return false;
   }
 
-  let datetime = new Date();
+  add_log(username, `spammed ${numberid} with curses ${curses}`, req.ip)
 
-  let data = `(${datetime.toLocaleString()}) ${username} spammed ${numberid} with curses ${curses} IP: ${req.ip}<br>`;
-  fs.appendFile('main.log',data, 'utf8',
-    // callback function
-    function(err) {     
-        if (err) throw err;
-        // if no error
-        console.log(`(${datetime.toLocaleString()}) ${username} spammed ${numberid} with curses ${curses} IP: ${req.ip}`)
-  });
 
   res.send('הבחור זויין'); 
   let usersconfig = require('./whatsapp-sessions.json'); 
